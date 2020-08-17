@@ -1,7 +1,0 @@
-* Computational Physics, Deparment of Physics, IIISER PUNE.
-
-Programming exercicies form the course Computational Physics by Dr. Apratim Chatterji and Dr. Prasenjit Ghosh
-
-** Youtube Channel
-
-https://www.youtube.com/watch?v=UXTWnUjkVhc&list=PLyqSpQzTE6M8Lg4pPC2KKutByiFCR9kV0&index=6

@@ -1,4 +1,4 @@
 all: program
 
 program:
-	gfortran  codefibonacci.f90 -o fibonacci
+	gfortran  mainfibonacci.f90 

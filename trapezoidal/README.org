@@ -1,0 +1,12 @@
+* COMPOSITE TRAPEZOIDAL RULE
+Is a technique for approximating the definite integral. 
+The approximation becomes more accurate as the resolution of the partition increases.
+Divide the incline line into n smaller segments, we will have lots of trapezoidal. The sum over the area of all trapezoidal and get the total area under the curve which is the integral.
+The error is significantly reduced comparisons 
+
+** Trapezoidal Rule
+The trapezoidal rule works by approximating the region under the graph of the function f(x) as a trapezoid and calculating its area. 
+With this metod we overestimating and underestimating only areas beetween the curve and incline line.
+Give us better result in comparisons of rectagunlar method.
+ 
+

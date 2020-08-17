@@ -1,0 +1,8 @@
+* Why I learned?
+** how to read a fortram program
+** basic attributes
+** declaration of variables
+** mathematical operations
+** Use of do loops and if loops
+** Procedures in Fortran as subroutines, functions and modules
+** HOw to compile procedures

@@ -1,6 +1,6 @@
 PROGRAM composite_trapezoidal
   IMPLICIT NONE
-  REAL :: a=0,b=1,x=0,h=0
+  REAL :: a=0D0,b=1,x=0,h=0
   REAL :: height,sum=0,fun,integral
   INTEGER :: i,n
 

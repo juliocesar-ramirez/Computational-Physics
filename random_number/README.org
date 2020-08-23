@@ -1,0 +1,2 @@
+* Pseudo Random Number
+Usafe of a RAANDOM NUMBER generator in Fortran

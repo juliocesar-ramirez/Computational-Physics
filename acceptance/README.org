@@ -1,0 +1,3 @@
+* Acceptance Rejection Method
+  Good converge with few monte carlos steps. This method improve the size of sampling
+  

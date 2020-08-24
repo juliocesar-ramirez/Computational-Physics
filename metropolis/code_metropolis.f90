@@ -2,6 +2,7 @@ PROGRAM code_metropolis
   USE utilities
   IMPLICIT NONE
 
+  
   INTEGER :: L,iteration
   INTEGER,ALLOCATABLE, DIMENSION(:,:) :: spin
   REAL :: energy, magnatize

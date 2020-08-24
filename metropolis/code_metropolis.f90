@@ -5,7 +5,9 @@ PROGRAM code_metropolis
   
   INTEGER :: L,iteration
   INTEGER,ALLOCATABLE, DIMENSION(:,:) :: spin
-  REAL :: energy, magnatize
+  REAL :: energy, magnatize,Esum, M
+
+  
   WRITE(*,*) "Enter the number of lattice points in one dimension"
   READ (*,*) L
 
@@ -16,9 +18,10 @@ PROGRAM code_metropolis
   
   CALL initial_values(L,spin)
   
-
-  CALL i_magnetization_and_energy(spin,L,energy,magnatize)
-  CALL mt_metropolis(iteration,spin,L,energy,magnatize)
+  Esum=0
+  M=0
+  CALL i_magnetization_and_energy(spin,L,Esum,M)
+  CALL mt_metropolis(iteration,spin,L,Esum,M)
   
   
 END PROGRAM code_metropolis

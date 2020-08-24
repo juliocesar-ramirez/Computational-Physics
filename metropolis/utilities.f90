@@ -38,18 +38,29 @@ CONTAINS
     INTEGER, INTENT(IN) :: i,j,a,b,c,d
     REAL :: J_ising=1.0
     
-    E1=J_ising*(FLOAT(spin(i,j)) * ( FLOAT(spin(a,j))+FLOAT(spin(b,j))+FLOAT(spin(i,c))+FLOAT(spin(i,d)) ) )
+    E1=-J_ising*FLOAT((spin(i,j) * ( spin(a,j)+spin(b,j)+spin(i,c)+spin(i,d) )) )
   END FUNCTION E1
+  !---------------------------------------------------------------------------------------------
+  REAL FUNCTION E2(spin,L,i,j,a,b,c,d)
+    INTEGER, INTENT(IN) :: L
+    INTEGER, INTENT(IN), DIMENSION(L,L) :: spin
+    INTEGER, INTENT(IN) :: i,j,a,b,c,d
+    REAL :: J_ising=1.0
+
+    E2=-J_ising*FLOAT((spin(i,j) * ( spin(a,j)+spin(b,j)+spin(i,c)+spin(i,d) )) )
+  END FUNCTION E2
   !---------------------------------------------------------------------------------------------
   SUBROUTINE i_magnetization_and_energy(spin,L,energy,magnatize)
     IMPLICIT NONE
     INTEGER, INTENT(IN) :: L
     INTEGER, INTENT(IN), DIMENSION(L,L) :: spin
-    REAL, INTENT(OUT) :: energy, magnatize
+    REAL, INTENT(INOUT) :: energy, magnatize
     
     INTEGER :: a,b,c,d
-    INTEGER :: i,j
-    REAL :: Esum=0,M=0,N,mag
+    INTEGER :: i,j,N
+    REAL :: Esum,M,mag
+    Esum=energy
+    M=magnatize
     DO i=1,L
        DO j=1,L
           
@@ -57,11 +68,11 @@ CONTAINS
           
           CALL periodic_boundary_condition(L,i,j,a,b,c,d)
           Esum=Esum+E1(spin,L,i,j,a,b,c,d)
-          M=M+FLOAT(spin(i,j ))
+          M=M+spin(i,j )  
        END DO
     END DO
-    N=FLOAT(L)**2
-    mag=M/N
+    N=L**2
+    mag=M/FLOAT(N)
     Esum=Esum*0.5
     energy=Esum
     magnatize=M
@@ -85,28 +96,31 @@ CONTAINS
     INTEGER, INTENT(IN) :: L
     REAL, INTENT(IN) :: energy, magnatize
     INTEGER, INTENT(INOUT), DIMENSION(L,L) :: spin
-    !    REAL, EXTERNAL :: E
-    
-    REAL :: r,Ei,Ef,dE,E,M,u,T=2,h,N
-    INTEGER :: time, mm , nn, i,j,a,b,c,d
 
-    N= FLOAT(L)**2
+    
+    REAL :: r,Ei,Ef,dE,E,M,u,T=2,h
+    INTEGER :: time, mm , nn, i,j,a,b,c,d,N
+
+    OPEN(1,FILE="Energy",ACTION="WRITE",STATUS="OLD")
+    OPEN(2,FILE="Magnetization",ACTION="WRITE",STATUS="OLD")
+
+    N=L*L
     E=energy
     M=magnatize
     DO time=1, iteration
-
+       
        DO mm=1, L
           DO nn=1,L
              CALL RANDOM_NUMBER(r)
              i=INT(r*FLOAT(L))+1
              CALL RANDOM_NUMBER(r)
              j=INT(r*FLOAT(L))+1
-             !             WRITE(*,*) i,j
+
              CALL neighbour(i,j,a,b,c,d)
              CALL periodic_boundary_condition(L,i,j,a,b,c,d)
-             Ei=E1(spin,L,i,j,a,b,c,d)
-             spin(i,j)=-spin(j,i)
-             Ef=E1(spin,L,i,j,a,b,c,d)
+             Ei=E2(spin,L,i,j,a,b,c,d)
+             spin(i,j)=-spin(i,j)
+             Ef=E2(spin,L,i,j,a,b,c,d)
              dE=Ef-Ei
              IF (dE<=0.0) THEN
                 E=E+dE
@@ -125,10 +139,12 @@ CONTAINS
           END DO
        END DO
 
-       WRITE (*,*) time ,M/N, E/N
+       WRITE (1,*) time ,M/FLOAT(N)
+       WRITE (2,*) time ,E/FLOAT(N)
+
     END DO
 
-    
+
 
 
   END SUBROUTINE mt_metropolis

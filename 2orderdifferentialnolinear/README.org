@@ -1,0 +1,10 @@
+#+TITLE: Second Order Differential No Linear Equation
+* first Equation to solve
+
+\begin{equation}
+\frac{d²x}{dt²} = - sin(x)
+\end{equation}
+
+** Initial condition
+x0=0.0
+v0=1.8
